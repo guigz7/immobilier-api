@@ -1,4 +1,4 @@
-from app.models.piece import Piece
+from app.modeles.piece import Piece
 
 @bien_bp.route("/pieces", methods=["POST"])
 def ajouter_piece():

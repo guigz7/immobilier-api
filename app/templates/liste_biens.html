@@ -1,0 +1,12 @@
+<h1>Liste des biens</h1>
+
+<form method="GET" action="/biens/vue">
+    <input type="text" name="ville" placeholder="Filtrer par ville">
+    <button type="submit">Filtrer</button>
+</form>
+
+<ul>
+    {% for bien in biens %}
+    <li>{{ bien.nom }} - {{ bien.ville }}</li>
+    {% endfor %}
+</ul>

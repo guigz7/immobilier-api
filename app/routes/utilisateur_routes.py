@@ -1,5 +1,5 @@
-from flask import Blueprint, request, jsonify, render_templates
-from app.models.user import Utilisateur
+from flask import Blueprint, request, jsonify, render_template
+from app.modeles.utilisateur import Utilisateur
 from app import db
 
 utilisateur_bp = Blueprint("utilisateur", __name__)
