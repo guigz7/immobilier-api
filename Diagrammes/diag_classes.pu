@@ -1,0 +1,32 @@
+@startuml
+
+entity User {
+  +id : int
+  --
+  first_name : string
+  last_name : string
+  birth_date : string
+}
+
+entity Property {
+  +id : int
+  --
+  name : string
+  description : string
+  type : string
+  city : string
+  owner_id : int
+}
+
+entity Room {
+  +id : int
+  --
+  name : string
+  size : int
+  property_id : int
+}
+
+User "1" -- "*" Property : possede
+Property "1" -- "*" Room : contient
+
+@enduml
