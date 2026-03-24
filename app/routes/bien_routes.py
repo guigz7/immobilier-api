@@ -4,9 +4,13 @@ from app import db
 
 bien_bp = Blueprint("bien", __name__)
 
+@bien_bp.route("/biens/form", methods=["GET"])
+def form_bien():
+    return render_template("bien.html")
+
 @bien_bp.route("/biens", methods=["POST"])
 def creer_bien():
-    data = request.json
+    data = request.form if request.form else request.json
 
     bien = Bien(
         nom=data["nom"],
@@ -19,4 +23,4 @@ def creer_bien():
     db.session.add(bien)
     db.session.commit()
 
-    return jsonify({"message": "Bien créé"})
+    return "Bien créé"
