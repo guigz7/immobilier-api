@@ -1,8 +1,13 @@
 <h1>Immobilier API</h1>
 
-<ul>
-    <li><a href="/users/form">Créer utilisateur</a></li>
-    <li><a href="/users_form">Voir mes informations</a></li>
-    <li><a href="/biens/form">Créer bien</a></li>
-    <li><a href="/biens/vue">Voir les biens</a></li>
-</ul>
+{% if user %}
+<p>Connecté : {{ user.prenom }} {{ user.nom }}</p>
+<a href="/logout">Se déconnecter</a><br>
+<a href="/users/{{ user.id }}">Mon profil</a><br>
+{% else %}
+<p>Non connecté</p>
+<a href="/login">Se connecter</a><br>
+<a href="/users/form">Créer un compte</a><br>
+{% endif %}<br>
+
+<a href="/biens/vue">Voir les biens</a>

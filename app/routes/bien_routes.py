@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template, redirect
+from flask import Blueprint, request, jsonify, render_template, redirect, session
 from app.modeles.bien import Bien
 from app.modeles.utilisateur import Utilisateur
 from app.modeles.piece import Piece
@@ -56,6 +56,9 @@ def vue_biens():
 
 @bien_bp.route("/biens/<int:id>", methods=["PUT"])
 def modifier_bien_api(id):
+    if "user_id" not in session or session["user_id"] != id:
+        return "Non autorisé", 403
+    
     user_id = request.headers.get("X-User-Id")
     bien = Bien.query.get(id)
 
@@ -85,6 +88,9 @@ def form_modifier_bien(id):
 
 @bien_bp.route("/biens/<int:id>/edit", methods=["POST"])
 def modifier_bien(id):
+    if "user_id" not in session or session["user_id"] != id:
+        return "Non autorisé", 403
+
     bien = Bien.query.get(id)
 
     if not bien:
@@ -103,6 +109,9 @@ def modifier_bien(id):
 
 @bien_bp.route("/biens/<int:id>/pieces", methods=["POST"])
 def ajouter_piece(id):
+    if "user_id" not in session or session["user_id"] != id:
+        return "Non autorisé", 403
+
     bien = Bien.query.get(id)
 
     if not bien:
@@ -123,6 +132,9 @@ def ajouter_piece(id):
 
 @bien_bp.route("/biens/<int:id>/delete", methods=["POST"])
 def supprimer_bien(id):
+    if "user_id" not in session or session["user_id"] != id:
+        return "Non autorisé", 403
+        
     bien = Bien.query.get(id)
 
     if not bien:

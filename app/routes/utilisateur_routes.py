@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template, redirect
+from flask import Blueprint, request, jsonify, render_template, redirect, session
 from datetime import datetime
 from app.modeles.utilisateur import Utilisateur
 from app import db
@@ -68,6 +68,9 @@ def detail_utilisateur(id):
 
 @utilisateur_bp.route("/users/<int:id>/edit", methods=["GET", "POST"])
 def modifier_utilisateur(id):
+    if "user_id" not in session or session["user_id"] != id:
+        return "Non autorisé", 403
+        
     utilisateur = Utilisateur.query.get(id)
 
     if not utilisateur:
@@ -90,3 +93,36 @@ def modifier_utilisateur(id):
     db.session.commit()
 
     return redirect(f"/users/{utilisateur.id}")
+
+@utilisateur_bp.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        return render_template("login.html")
+
+    # POST
+    prenom = request.form.get("prenom")
+    nom = request.form.get("nom")
+    date_naissance_str = request.form.get("date_naissance")
+
+    try:
+        date_naissance = datetime.strptime(date_naissance_str, "%d/%m/%Y").date()
+    except:
+        return "Format date invalide", 400
+
+    user = Utilisateur.query.filter_by(
+        prenom=prenom,
+        nom=nom,
+        date_naissance=date_naissance
+    ).first()
+
+    if not user:
+        return "Utilisateur introuvable", 404
+
+    session["user_id"] = user.id
+
+    return redirect("/")
+
+@utilisateur_bp.route("/logout")
+def logout():
+    session.pop("user_id", None)
+    return redirect("/")
