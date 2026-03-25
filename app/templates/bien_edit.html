@@ -8,3 +8,30 @@
 
     <button type="submit">Modifier</button>
 </form>
+
+<h2> Supprimer une pièce </h2>
+<ul>
+    {% for piece in bien.pieces %}
+    <li>
+        {{ piece.nom }} ({{ piece.surface }} m²)
+
+        <form method="POST" action="/pieces/{{ piece.id }}/delete" style="display:inline;">
+            <button type="submit">Supprimer</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+<h3>Ajouter une pièce</h3>
+
+<form method="POST" action="/biens/{{ bien.id }}/pieces">
+    <input type="text" name="nom" placeholder="Nom de la pièce"><br>
+    <input type="number" name="surface" placeholder="Taille en m²"><br>
+    <button type="submit">Ajouter</button>
+</form>
+
+<a href="/biens/{{ bien.id }}">Ne pas modifier</a><br>
+
+<form method="POST" action="/biens/{{ bien.id }}/delete">
+    <button type="submit">Supprimer le bien</button>
+</form>

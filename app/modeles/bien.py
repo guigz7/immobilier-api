@@ -11,4 +11,4 @@ class Bien(db.Model):
     
     id_proprietaire = db.Column(db.Integer, db.ForeignKey('utilisateur.id'))
 
-    pieces = db.relationship("Piece", backref="bien", lazy=True)
+    pieces = db.relationship("Piece", backref="bien", cascade="all, delete", lazy=True)

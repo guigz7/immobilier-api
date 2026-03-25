@@ -20,18 +20,13 @@ def creer_bien():
         description=data["description"],
         type_bien=data["type_bien"],
         ville=data["ville"],
-        id_proprietaire=data["proprietaire_id"]
+        id_proprietaire=data["id_proprietaire"]
     )
 
     db.session.add(bien)
     db.session.commit()
 
-    return """
-    <h2>Bien créé</h2>
-    
-    <a href="/">Retour à l'accueil</a><br>
-    <a href="/biens/form">Créer un autre bien</a>
-    """
+    return redirect(f"/biens/{bien.id}")
 
 @bien_bp.route("/biens", methods=["GET"])
 def lister_biens():
@@ -125,3 +120,20 @@ def ajouter_piece(id):
     db.session.commit()
 
     return redirect(f"/biens/{id}")
+
+@bien_bp.route("/biens/<int:id>/delete", methods=["POST"])
+def supprimer_bien(id):
+    bien = Bien.query.get(id)
+
+    if not bien:
+        return "Bien introuvable", 404
+
+    # 🔐 sécurité (optionnel mais recommandé)
+    user_id = request.headers.get("X-User-Id")
+    if user_id and str(bien.proprietaire_id) != user_id:
+        return "Non autorisé", 403
+
+    db.session.delete(bien)
+    db.session.commit()
+
+    return redirect("/biens/vue")

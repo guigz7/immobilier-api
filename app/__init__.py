@@ -11,8 +11,10 @@ def create_app():
 
     from app.routes.utilisateur_routes import utilisateur_bp
     from app.routes.bien_routes import bien_bp
+    from app.routes.piece_routes import piece_bp
 
     app.register_blueprint(utilisateur_bp)
     app.register_blueprint(bien_bp)
+    app.register_blueprint(piece_bp)
 
     return app

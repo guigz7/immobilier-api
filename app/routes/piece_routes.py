@@ -1,6 +1,10 @@
+from flask import Blueprint, redirect
 from app.modeles.piece import Piece
+from app import db
 
-@bien_bp.route("/pieces", methods=["POST"])
+piece_bp = Blueprint("pieces", __name__)
+
+@piece_bp.route("/pieces", methods=["POST"])
 def ajouter_piece():
     data = request.form
 
@@ -14,3 +18,17 @@ def ajouter_piece():
     db.session.commit()
 
     return "Pièce ajoutée"
+
+@piece_bp.route("/pieces/<int:id>/delete", methods=["POST"])
+def supprimer_piece(id):
+    piece = Piece.query.get(id)
+
+    if not piece:
+        return "Pièce introuvable", 404
+
+    bien_id = piece.id_bien
+
+    db.session.delete(piece)
+    db.session.commit()
+
+    return redirect(f"/biens/{bien_id}")
