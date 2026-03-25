@@ -60,7 +60,7 @@ def vue_biens():
     return render_template("liste_biens.html", biens=biens)
 
 @bien_bp.route("/biens/<int:id>", methods=["PUT"])
-def modifier_bien(id):
+def modifier_bien_api(id):
     user_id = request.headers.get("X-User-Id")
     bien = Bien.query.get(id)
 
