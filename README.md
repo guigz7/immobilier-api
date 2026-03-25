@@ -92,6 +92,17 @@ immobilier-api/
 └── README.md
 ```
 
+## Diagramme des modèles
+
+Le diagramme ci-dessous représente les trois classes principales de l’application et leurs relations :
+
+- **Utilisateur** : contient les informations personnelles (nom, prénom, date de naissance) et est lié aux biens qu’il possède.  
+- **Bien** : représente un bien immobilier avec ses caractéristiques (nom, description, type, ville) et un propriétaire (`Utilisateur`).  
+- **Piece** : correspond aux pièces d’un bien (nom, taille) et est rattachée à un **Bien**.  
+
+![Diagramme des modèles](diagramme/diag_classes.png)
+
+
 ---
 
 ## Installation
