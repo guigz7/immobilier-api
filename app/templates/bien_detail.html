@@ -1,0 +1,23 @@
+<h1>Détail du bien</h1>
+
+<p><strong>Nom :</strong> {{ bien.nom }}</p>
+<p><strong>Description :</strong> {{ bien.description }}</p>
+<p><strong>Type :</strong> {{ bien.type_bien }}</p>
+<p><strong>Ville :</strong> {{ bien.ville }}</p>
+
+<h2>Pièces</h2>
+<ul>
+    {% for piece in bien.pieces %}
+    <li>{{ piece.nom }} ({{ piece.taille }} m²)</li>
+    {% endfor %}
+</ul>
+
+<h3>Ajouter une pièce</h3>
+
+<form method="POST" action="/biens/{{ bien.id }}/pieces">
+    <input type="text" name="nom" placeholder="Nom de la pièce"><br>
+    <input type="number" name="taille" placeholder="Taille en m²"><br>
+    <button type="submit">Ajouter</button>
+</form>
+
+<a href="/biens/{{ bien.id }}/edit">Modifier</a>

@@ -1,0 +1,10 @@
+<h1>Modifier le bien</h1>
+
+<form method="POST" action="/biens/{{ bien.id }}/edit">
+    <input type="text" name="nom" value="{{ bien.nom }}"><br>
+    <input type="text" name="description" value="{{ bien.description }}"><br>
+    <input type="text" name="type_bien" value="{{ bien.type_bien }}"><br>
+    <input type="text" name="ville" value="{{ bien.ville }}"><br>
+
+    <button type="submit">Modifier</button>
+</form>

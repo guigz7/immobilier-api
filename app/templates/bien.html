@@ -5,7 +5,13 @@
     <input type="text" name="description" placeholder="Description"><br>
     <input type="text" name="type_bien" placeholder="Type"><br>
     <input type="text" name="ville" placeholder="Ville"><br>
-    <input type="number" name="proprietaire_id" placeholder="ID propriétaire"><br>
-
+    <select name="id_proprietaire">
+        {% for user in utilisateurs %}
+        <option value="{{ user.id }}">
+            {{ user.prenom }} {{ user.nom }}
+        </option>
+        {% endfor %}
+    </select><br>
+    <br>
     <button type="submit">Créer</button>
 </form>

@@ -7,6 +7,10 @@
 
 <ul>
     {% for bien in biens %}
-    <li>{{ bien.nom }} - {{ bien.ville }}</li>
+    <li>
+        <a href="/biens/{{ bien.id }}">
+            {{ bien.nom }} - {{ bien.ville }}
+        </a>
+    </li>
     {% endfor %}
 </ul>

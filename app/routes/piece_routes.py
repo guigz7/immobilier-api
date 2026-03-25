@@ -7,7 +7,7 @@ def ajouter_piece():
     piece = Piece(
         nom=data["nom"],
         taille=data["taille"],
-        bien_id=data["bien_id"]
+        bien_id=data["id_bien"]
     )
 
     db.session.add(piece)
