@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, redirect
 from datetime import datetime
 from app.modeles.utilisateur import Utilisateur
 from app import db
@@ -33,3 +33,60 @@ def creer_utilisateur():
     <a href="/">Retour à l'accueil</a><br>
     <a href="/users/form">Créer un autre utilisateur</a>
     """
+
+@utilisateur_bp.route("/users_form", methods=["GET", "POST"])
+def form_acces_utilisateur():
+    if request.method == "GET":
+        return render_template("utilisateur_form.html")
+
+    data = request.form
+
+    try:
+        date = datetime.strptime(data["date_naissance"], "%d/%m/%Y").date()
+    except:
+        return "Format date invalide", 400
+
+    user = Utilisateur.query.filter_by(
+        prenom=data["prenom"],
+        nom=data["nom"],
+        date_naissance=date
+    ).first()
+
+    if not user:
+        return "Utilisateur introuvable", 404
+
+    return redirect(f"/users/{user.id}")
+
+@utilisateur_bp.route("/users/<int:id>", methods=["GET"])
+def detail_utilisateur(id):
+    utilisateur = Utilisateur.query.get(id)
+
+    if not utilisateur:
+        return "Utilisateur introuvable", 404
+
+    return render_template("utilisateur_detail.html", utilisateur=utilisateur)
+
+@utilisateur_bp.route("/users/<int:id>/edit", methods=["GET", "POST"])
+def modifier_utilisateur(id):
+    utilisateur = Utilisateur.query.get(id)
+
+    if not utilisateur:
+        return "Utilisateur introuvable", 404
+
+    if request.method == "GET":
+        return render_template("utilisateur_edit.html", utilisateur=utilisateur)
+
+    data = request.form
+
+    try:
+        date = datetime.strptime(data["date_naissance"], "%d/%m/%Y").date()
+    except:
+        return "Format date invalide", 400
+
+    utilisateur.prenom = data["prenom"]
+    utilisateur.nom = data["nom"]
+    utilisateur.date_naissance = date
+
+    db.session.commit()
+
+    return redirect(f"/users/{utilisateur.id}")

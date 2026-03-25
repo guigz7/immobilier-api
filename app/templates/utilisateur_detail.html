@@ -1,0 +1,20 @@
+<h1>Profil utilisateur</h1>
+
+<p><strong>Prénom :</strong> {{ utilisateur.prenom }}</p>
+<p><strong>Nom :</strong> {{ utilisateur.nom }}</p>
+<p><strong>Date de naissance :</strong> {{ utilisateur.date_naissance }}</p>
+
+<h2>Ses biens</h2>
+<ul>
+    {% for bien in utilisateur.biens %}
+    <li>
+        <a href="/biens/{{ bien.id }}">
+            {{ bien.nom }} - {{ bien.ville }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="/users/{{ utilisateur.id }}/edit">Modifier mes informations</a><br>
+
+<a href="/">Retour à l'accueil</a><br>

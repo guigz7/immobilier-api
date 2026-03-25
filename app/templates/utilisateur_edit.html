@@ -1,0 +1,11 @@
+<h1>Modifier mes informations</h1>
+
+<form method="POST" action="/users/{{ utilisateur.id }}/edit">
+    <input type="text" name="prenom" value="{{ utilisateur.prenom }}"><br>
+    <input type="text" name="nom" value="{{ utilisateur.nom }}"><br>
+    <input type="text" name="date_naissance" value="{{ utilisateur.date_naissance }}"><br>
+
+    <button type="submit">Modifier</button>
+</form><br>
+
+<a href="/">Retour à l'accueil</a>

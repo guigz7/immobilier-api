@@ -30,8 +30,9 @@
     <button type="submit">Ajouter</button>
 </form>
 
-<a href="/biens/{{ bien.id }}">Ne pas modifier</a><br>
-
 <form method="POST" action="/biens/{{ bien.id }}/delete">
     <button type="submit">Supprimer le bien</button>
-</form>
+</form><br>
+
+<a href="/biens/{{ bien.id }}">Ne pas modifier</a><br>
+<a href="/">Retour à l'accueil</a><br>
