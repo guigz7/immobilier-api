@@ -100,7 +100,7 @@ Le diagramme ci-dessous représente les trois classes principales de l’applica
 - **Bien** : représente un bien immobilier avec ses caractéristiques (nom, description, type, ville) et un propriétaire (`Utilisateur`).  
 - **Piece** : correspond aux pièces d’un bien (nom, taille) et est rattachée à un **Bien**.  
 
-- [./Diagrammes/diag_classes.png](./Diagrammes/diag_classes.png)
+![Diagramme des modèles](Diagrammes/diag_classes.png)
 
 
 ---
