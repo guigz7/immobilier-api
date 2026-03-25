@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from app.modeles.bien import Bien
 from app import db
 
@@ -50,3 +50,18 @@ def vue_biens():
         biens = Bien.query.all()
 
     return render_template("liste_biens.html", biens=biens)
+
+    @bien_bp.route("/biens/<int:id>", methods=["PUT"])
+    def modifier_bien(id):
+        user_id = request.headers.get("X-User-Id")
+        bien = Bien.query.get(id)
+
+        if str(bien.proprietaire_id) != user_id:
+            return jsonify({"error": "non autorise"}), 403
+
+        data = request.json
+        bien.nom = data.get("nom", bien.nom)
+
+        db.session.commit()
+
+        return jsonify({"message": "modifie"})

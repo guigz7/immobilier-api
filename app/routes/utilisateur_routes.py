@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify, render_template
+from datetime import datetime
 from app.modeles.utilisateur import Utilisateur
 from app import db
 
@@ -12,13 +13,23 @@ def form_utilisateur():
 def creer_utilisateur():
     data = request.form if request.form else request.json
 
+    try:
+        data_date = datetime.strptime(data["date_naissance"], "%d/%m/%Y").date()
+    except ValueError:
+        return {"error": "format date invalide (jj/mm/aaaa attendu)"}, 400
+
     user = Utilisateur(
         prenom=data["prenom"],
         nom=data["nom"],
-        date_naissance=data["date_naissance"]
+        date_naissance=data_date
     )
 
     db.session.add(user)
     db.session.commit()
 
-    return "Utilisateur créé"
+    return """
+    <h2>Utilisateur créé</h2>
+    
+    <a href="/">Retour à l'accueil</a><br>
+    <a href="/users/form">Créer un autre utilisateur</a>
+    """
